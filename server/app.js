@@ -1,13 +1,32 @@
 const express = require("express")
 const app = express()
 const postRouter = require("./routes/post_routes")
-const port = 3000
+const port = process.env.port || 3000
+const mongoose = require("mongoose")
 
 // parse application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: false }))
 
 // parse application/json
 app.use(express.json())
+
+const dbConn = "mongodb://localhost/blog_app"
+
+mongoose.connect(
+	dbConn,
+	{
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+		useFindAndModify: false
+	},
+	err => {
+		if (err) {
+			console.log("Error connecting to database", err)
+		} else {
+			console.log("Connected to database!")
+		}
+	}
+)
 
 app.get('/', (req, res) => {
 //   res.send('Hello World!')

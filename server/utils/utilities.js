@@ -1,9 +1,10 @@
 let dataFile = "../../server/data/blog_posts.json"
 let blogPosts = require(dataFile)
 const fs = require('fs');
+const Post = require('../../server/models/post')
 
 const getAllPosts = (req) => {
-	return blogPosts
+	return Post.find()
 }
 
 const getPostById = (req) => {
