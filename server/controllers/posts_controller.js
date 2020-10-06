@@ -1,7 +1,19 @@
 const { getAllPosts, getPostById, addPost, deletePost, updatePost } = require("../utils/utilities")
 
 const getPosts = (req, res) => {
-	res.send(getAllPosts(req))
+    getAllPosts(req).
+    sort({
+        modified_date: -1
+    }).
+    exec((err, posts) => {
+        if (err) {
+            res.status(500);
+            return res.json({
+                error: err.message
+            });
+        }
+        res.send(posts);
+    });
 }
 
 const getPost = (req, res) => {
